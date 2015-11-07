@@ -52,9 +52,19 @@ public class PublicKeyCryptoToolbox
 		/************************************************************
 		 * Insert the code of Exercise 7a below this comment!
 		 ************************************************************/
-
-		// Remove this line!
-		return new BigInteger("0");
+		BigInteger c = BigInteger.ZERO;
+		BigInteger d = BigInteger.ONE;
+		for (int i = b.bitLength() - 1; i >= 0; i--)
+		{
+			c = c.multiply(BigInteger.valueOf(2));
+			d = d.multiply(d).mod(m);
+			if (b.testBit(i))
+			{
+				c = c.add(BigInteger.ONE);
+				d = d.multiply(a).mod(m);
+			}
+		}
+		return d;
 	}
 
 	public BigInteger randomInteger(int bit_length)
@@ -63,9 +73,8 @@ public class PublicKeyCryptoToolbox
 		/************************************************************
 		 * Insert the code of Exercise 7a below this comment!
 		 ************************************************************/
-
-		// Remove this line!
-		return new BigInteger("0");
+		BigInteger rslt = new BigInteger(bit_length, prng);
+		return rslt;
 	}
 
 	public BigInteger randomInteger(BigInteger n)
@@ -74,9 +83,12 @@ public class PublicKeyCryptoToolbox
 		/************************************************************
 		 * Insert the code of Exercise 7b below this comment!
 		 ************************************************************/
-
-		// Remove this line!
-		return new BigInteger("0");
+		int bit_length = n.bitLength();
+		BigInteger rslt;
+		do
+			rslt = new BigInteger(bit_length, prng);
+		while (!(rslt.compareTo(BigInteger.ONE) >= 0) || !(rslt.compareTo(n) < 0));
+		return rslt;
 	}
 
 	public boolean witness(BigInteger a, BigInteger n)
@@ -85,31 +97,59 @@ public class PublicKeyCryptoToolbox
 		/************************************************************
 		 * Insert the code of Exercise 8a below this comment!
 		 ************************************************************/
+		// BigInteger is a type just like normal Integer type
+		// so parameters been transfered by values rather than references
+		BigInteger n1 = n.subtract(BigInteger.ONE);
+		BigInteger d = BigInteger.ONE;
+		BigInteger x;
+		for (int i = n1.bitLength() - 1; i >= 0; i--)
+		{
+			x = d;
+			d = d.multiply(d).mod(n);
+			if (d.compareTo(BigInteger.ONE) == 0 && x.compareTo(BigInteger.ONE) != 0 && x.compareTo(n1) != 0)
+				return true;
+			if (n1.testBit(i))
+				d = d.multiply(a).mod(n);
+		}
+		if (d.compareTo(BigInteger.ONE) != 0)
+			return true;
 
-		// Remove this line!
 		return false;
 	}
 
 	public boolean millerRabinTest(BigInteger n, int s)
 	{
 
-		/************************************************************
-		 * Insert the code of Exercise 8b below this comment!
+		/********************
+		 * **************************************** Insert the code of Exercise
+		 * 8b below this comment!
 		 ************************************************************/
-
-		// Remove this line!
-		return false;
+		BigInteger a;
+		for (int i = 1; i <= s; i++)
+		{
+			a = randomInteger(n);
+			if (witness(a, n))
+				return false;
+		}
+		return true;
 	}
 
 	public BigInteger randomPrime(int bit_length, int s)
 	{
 
 		/************************************************************
-		 * Insert the code of Exercise 8d below this comment!
+		 * Insert the code of Exercise 9d below this comment!
 		 ************************************************************/
+		BigInteger rnd;
+		do
+		{
+			rnd = new BigInteger(bit_length, prng);
+			if (!rnd.testBit(bit_length - 1))
+				continue;
 
-		// Remove this line!
-		return new BigInteger("0");
+		} while (!millerRabinTest(rnd, s));
+		
+		return rnd;
 	}
 
 }
