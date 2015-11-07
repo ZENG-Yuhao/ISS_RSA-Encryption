@@ -4,35 +4,50 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Vector;
 
-public class PublicKeyCryptoToolbox {
+public class PublicKeyCryptoToolbox
+{
 	// / Secure pseudo random number generator
 	SecureRandom prng;
 
-	public PublicKeyCryptoToolbox() {
+	public PublicKeyCryptoToolbox()
+	{
 		// Create a new prng instance
 		prng = new SecureRandom();
 	}
 
-	public static EEAResult extendedEuclideanAlgorithm(BigInteger a, BigInteger b) {
+	public static EEAResult extendedEuclideanAlgorithm(BigInteger a, BigInteger b)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 6a below this comment!
 		 ************************************************************/
 
-		return EEA(a, b);
+		EEAResult rslt = EEA(a, b);
+		rslt.setA(a);
+		rslt.setB(b);
+		return rslt;
 	}
 
-	private static EEAResult EEA(BigInteger a, BigInteger b) {
-		if (b.compareTo(BigInteger.ZERO) == 0) {
-
-			return null;
-		} else {
-
+	private static EEAResult EEA(BigInteger a, BigInteger b)
+	{
+		if (b.compareTo(BigInteger.ZERO) == 0)
+		{
+			return new EEAResult(null, null, a, BigInteger.ONE, BigInteger.ZERO);
 		}
-		return null;
+		else
+		{
+			EEAResult rslt = EEA(b, a.mod(b));
+			BigInteger x = rslt.getY();
+			BigInteger y = rslt.getX().subtract(a.divide(b).multiply(rslt.getY()));
+			// because d does not change, we just keep it in "rslt".
+			rslt.setX(x);
+			rslt.setY(y);
+			return rslt;
+		}
 	}
 
-	static public BigInteger modExp(BigInteger a, BigInteger b, BigInteger m) {
+	static public BigInteger modExp(BigInteger a, BigInteger b, BigInteger m)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 7a below this comment!
@@ -42,7 +57,8 @@ public class PublicKeyCryptoToolbox {
 		return new BigInteger("0");
 	}
 
-	public BigInteger randomInteger(int bit_length) {
+	public BigInteger randomInteger(int bit_length)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 7a below this comment!
@@ -52,7 +68,8 @@ public class PublicKeyCryptoToolbox {
 		return new BigInteger("0");
 	}
 
-	public BigInteger randomInteger(BigInteger n) {
+	public BigInteger randomInteger(BigInteger n)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 7b below this comment!
@@ -62,7 +79,8 @@ public class PublicKeyCryptoToolbox {
 		return new BigInteger("0");
 	}
 
-	public boolean witness(BigInteger a, BigInteger n) {
+	public boolean witness(BigInteger a, BigInteger n)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 8a below this comment!
@@ -72,7 +90,8 @@ public class PublicKeyCryptoToolbox {
 		return false;
 	}
 
-	public boolean millerRabinTest(BigInteger n, int s) {
+	public boolean millerRabinTest(BigInteger n, int s)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 8b below this comment!
@@ -82,7 +101,8 @@ public class PublicKeyCryptoToolbox {
 		return false;
 	}
 
-	public BigInteger randomPrime(int bit_length, int s) {
+	public BigInteger randomPrime(int bit_length, int s)
+	{
 
 		/************************************************************
 		 * Insert the code of Exercise 8d below this comment!

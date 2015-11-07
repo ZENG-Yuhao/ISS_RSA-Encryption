@@ -4,17 +4,20 @@ import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.util.Vector;
 
-public class RSAEncryptor {
-	private BigInteger n;
-	private BigInteger e;
+public class RSAEncryptor
+{
+	private BigInteger	n;
+	private BigInteger	e;
 
-	public RSAEncryptor(BigInteger n, BigInteger e) {
+	public RSAEncryptor(BigInteger n, BigInteger e)
+	{
 		this.n = n;
 		this.e = e;
 	}
 
-	public BigInteger encrypt(BigInteger x) {
-		
+	public BigInteger encrypt(BigInteger x)
+	{
+
 		/************************************************************
 		 * Insert the code of Exercise 10b below this comment!
 		 ************************************************************/
@@ -24,33 +27,43 @@ public class RSAEncryptor {
 
 	}
 
-	public BigInteger stringToBigInteger(String s) {
+	public BigInteger stringToBigInteger(String s)
+	{
 		BigInteger b = BigInteger.ONE;
 
-		try {
-			for (byte i : s.getBytes("UTF-8")) {
+		try
+		{
+			for (byte i : s.getBytes("UTF-8"))
+			{
 				b = b.multiply(BigInteger.valueOf(255));
 				b = b.add(BigInteger.valueOf(i));
 			}
-		} catch (UnsupportedEncodingException e) {
+		}
+		catch (UnsupportedEncodingException e)
+		{
 			e.printStackTrace();
 		}
 
 		return b;
 	}
 
-	public Vector<BigInteger> encrypt(String x) {
+	public Vector<BigInteger> encrypt(String x)
+	{
 		String s;
 		Vector<BigInteger> v = new Vector<BigInteger>();
-		int len = (n.bitLength() / 8)-1;
+		int len = (n.bitLength() / 8) - 1;
 
-		do {
-			if (x.length() <= len) {
+		do
+		{
+			if (x.length() <= len)
+			{
 				s = x;
 				x = "";
-			} else {
+			}
+			else
+			{
 				s = x.substring(0, len);
-				//System.out.println(s);
+				// System.out.println(s);
 				x = x.substring(len);
 			}
 			v.add(encrypt(stringToBigInteger(s)));

@@ -3,10 +3,12 @@ package rsa;
 import java.math.BigInteger;
 import java.util.Vector;
 
-public class PKCTExercise {
-	
-	void eeaResultExercise() {
-		
+public class PKCTExercise
+{
+
+	void eeaResultExercise()
+	{
+
 		System.out.println("\nExercise 5:");
 		System.out.println("===========\n");
 
@@ -20,11 +22,12 @@ public class PKCTExercise {
 		x = new BigInteger("-2996671");
 		y = new BigInteger("3336940");
 		EEAResult eear = new EEAResult(a, b, d, x, y);
-		System.out.println("Is realatively prime? " + (eear.isRelativlyPrime()?"YES":"NO"));
-		System.out.println(eear.getInverse()); 
+		System.out.println("Is realatively prime? " + (eear.isRelativlyPrime() ? "YES" : "NO"));
+		System.out.println(eear.getInverse());
 	}
 
-	void euclidExercise() {
+	void euclidExercise()
+	{
 
 		System.out.println("\nExercise 6:");
 		System.out.println("===========\n");
@@ -32,10 +35,29 @@ public class PKCTExercise {
 		/************************************************************
 		 * Insert the code of Exercise 6b+c below this comment!
 		 ************************************************************/
-		
+		// Exercise 6b
+		BigInteger a = new BigInteger("7019544");
+		BigInteger b = new BigInteger("8135112");
+		EEAResult rslt = PublicKeyCryptoToolbox.extendedEuclideanAlgorithm(a, b);
+		System.out.println("A = " + a + "; B = " + b + ";");
+		System.out.println("D = " + rslt.getD());
+		System.out.println("X = " + rslt.getX());
+		System.out.println("Y = " + rslt.getY());
+
+		// Exercise 6c
+		a = new BigInteger("7186131");
+		b = new BigInteger("8002109");
+		rslt = PublicKeyCryptoToolbox.extendedEuclideanAlgorithm(a, b);
+		System.out.println("A = " + a + "; B = " + b + ";");
+		System.out.println("D = " + rslt.getD());
+		System.out.println("X = " + rslt.getX());
+		System.out.println("Y = " + rslt.getY());
+		System.out.println("Is a invertible modulo of b? " + (rslt.isRelativlyPrime() ? "YES" : "NO"));
+		System.out.println("Inverse integer of a: "+(rslt.isRelativlyPrime()? rslt.getInverse():"Non-exist"));
 	}
-	
-	void modExpExercise() {
+
+	void modExpExercise()
+	{
 		System.out.println("\nExercise 7:");
 		System.out.println("===========\n");
 
@@ -43,10 +65,10 @@ public class PKCTExercise {
 		 * Insert the code of Exercise 6b+c below this comment!
 		 ************************************************************/
 
-		
 	}
-	
-	void randomNumbers() {
+
+	void randomNumbers()
+	{
 		System.out.println("\nExercise 8:");
 		System.out.println("===========\n");
 
@@ -56,7 +78,8 @@ public class PKCTExercise {
 
 	}
 
-	void primalityTest() {
+	void primalityTest()
+	{
 		System.out.println("\nExercise 9:");
 		System.out.println("===========\n");
 
@@ -65,20 +88,21 @@ public class PKCTExercise {
 		 ************************************************************/
 
 	}
-	
-	void run() {
+
+	void run()
+	{
 		/*
-		 * Uncomment the method after completion of the
-                 * respective exercise!
+		 * Uncomment the method after completion of the respective exercise!
 		 */
-		eeaResultExercise();
-		//euclidExercise();
-		//modExpExercise();
-		//randomNumbers();
-		//primalityTest();
+		// eeaResultExercise();
+		euclidExercise();
+		// modExpExercise();
+		// randomNumbers();
+		// primalityTest();
 	}
-	
-	public static void main(String[] args) {
+
+	public static void main(String[] args)
+	{
 
 		PKCTExercise m = new PKCTExercise();
 		m.run();

@@ -3,12 +3,15 @@ package bigint;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 
-public class BigIntegerExercise {
+public class BigIntegerExercise
+{
 
-	public BigIntegerExercise() {
+	public BigIntegerExercise()
+	{
 	}
 
-	void expression() {
+	void expression()
+	{
 
 		System.out.println("\nExercise 2:");
 		System.out.println("===========\n");
@@ -23,13 +26,15 @@ public class BigIntegerExercise {
 		c = new BigInteger("3");
 		d = new BigInteger("761");
 		// expression: (a * b - 4)/c + ((d * d) - (a - b))
-		result = a.multiply(b).subtract(BigInteger.valueOf(4)).divide(c).add(d.multiply(d).subtract(a.subtract(b)));
+		result = a.multiply(b).subtract(BigInteger.valueOf(4)).divide(c)
+				.add(d.multiply(d).subtract(a.subtract(b)));
 		System.out.println(result);
 		System.out.print("Comparison Result with Normal Type: ");
 		System.out.println((512 * 102 - 4) / 3 + ((761 * 761) - (512 - 102)));
 	}
 
-	void comparison() {
+	void comparison()
+	{
 		System.out.println("\nExercise 3:");
 		System.out.println("===========\n");
 
@@ -54,7 +59,8 @@ public class BigIntegerExercise {
 		System.out.println((a.compareTo(b) != 0) ? "Yes" : "No");
 	}
 
-	void randomNumbers() {
+	void randomNumbers()
+	{
 		System.out.println("\nExercise 4:");
 		System.out.println("===========\n");
 
@@ -70,14 +76,16 @@ public class BigIntegerExercise {
 		randomNumberDisplay(2048, prng);
 	}
 
-	void randomNumberDisplay(int num_bits, SecureRandom prng) {
+	void randomNumberDisplay(int num_bits, SecureRandom prng)
+	{
 		BigInteger ng = new BigInteger(num_bits, prng);
 		System.out.println("The generated pseudo random number of " + num_bits + "-bits: ");
 		System.out.println(ng);
 		System.out.println();
 	}
 
-	public void run() {
+	public void run()
+	{
 		/*
 		 * Uncomment the method after the implementation!
 		 */
@@ -86,7 +94,8 @@ public class BigIntegerExercise {
 		randomNumbers();
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		BigIntegerExercise m = new BigIntegerExercise();
 
 		m.run();
