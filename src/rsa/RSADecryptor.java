@@ -37,7 +37,12 @@ public class RSADecryptor
 		/************************************************************
 		 * Insert the code of Exercise 10b below this comment!
 		 ************************************************************/
-		return new BigInteger("0");
+		BigInteger u = PublicKeyCryptoToolbox.modExp(y, d, p);
+		BigInteger v = PublicKeyCryptoToolbox.modExp(y, d, q);
+		EEAResult eear = PublicKeyCryptoToolbox.extendedEuclideanAlgorithm(q, p);
+		BigInteger q1 = eear.getInverse();
+		BigInteger x = u.subtract(v).multiply(q1.mod(p)).mod(p).multiply(q).add(v);
+		return x;
 	}
 
 	public String bigIntegerToString(BigInteger b)

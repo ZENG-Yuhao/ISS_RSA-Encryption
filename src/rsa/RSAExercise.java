@@ -6,7 +6,17 @@ import java.util.Vector;
 public class RSAExercise
 {
 
-	PublicKeyCryptoToolbox pkct = new PublicKeyCryptoToolbox();
+	PublicKeyCryptoToolbox	pkct		= new PublicKeyCryptoToolbox();
+	BigInteger				p			= BigInteger.ZERO;
+	BigInteger				q			= BigInteger.ZERO;
+	BigInteger				n			= BigInteger.ZERO;
+	BigInteger				phin		= BigInteger.ZERO;
+	BigInteger				d			= BigInteger.ZERO;
+
+	BigInteger				e			= BigInteger.ZERO;
+
+	int						bit_length	= 256;
+	int						s			= 50;
 
 	public void rsaParamsExercise()
 	{
@@ -17,22 +27,36 @@ public class RSAExercise
 		/************************************************************
 		 * Use the following variables in your implementation!
 		 ************************************************************/
-
+		PublicKeyCryptoToolbox pkct = new PublicKeyCryptoToolbox();
 		BigInteger p = BigInteger.ZERO;
 		BigInteger q = BigInteger.ZERO;
 		BigInteger n = BigInteger.ZERO;
 		BigInteger phin = BigInteger.ZERO;
 		BigInteger d = BigInteger.ZERO;
-		;
-		BigInteger e = BigInteger.ZERO;
-		;
 
-		int bit_length = 128;
+		BigInteger e = BigInteger.ZERO;
+
+		int bit_length = 256;
 		int s = 50;
 
 		/************************************************************
 		 * Insert the code of Exercise 10 below this comment!
 		 ************************************************************/
+
+		p = pkct.randomPrime(bit_length, s);
+		do
+			q = pkct.randomPrime(bit_length, s);
+		while (q.compareTo(p) == 0);
+		n = p.multiply(q);
+		phin = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+		EEAResult eear;
+		{
+			e = pkct.randomPrime(bit_length, s);
+			eear = PublicKeyCryptoToolbox.extendedEuclideanAlgorithm(e, phin);
+		}
+		while (!eear.isRelativlyPrime())
+			;
+		d = eear.getInverse();
 
 		/************************************************************
 		 * Do NOT change anyting below this line!
@@ -40,7 +64,7 @@ public class RSAExercise
 
 		System.out.println("BigInteger p = new BigInteger(\"" + p + "\");");
 		System.out.println("BigInteger q = new BigInteger(\"" + q + "\");");
-		System.out.println("BigInteger n = p.multiply(q);");
+		System.out.println("BigInteger n = p.multiply(q);" + n);
 		System.out.println("BigInteger d = new BigInteger(\"" + d + "\");");
 		System.out.println("BigInteger e = new BigInteger(\"" + e + "\");");
 		System.out.println("Check: " + e.multiply(d).mod(phin));
@@ -50,15 +74,41 @@ public class RSAExercise
 	{
 		System.out.println("\nExercise 11 and 12:");
 		System.out.println("===================\n");
-
+		
 		/************************************************************
 		 * Insert the code of Exercise 11c+d+e below this comment!
 		 ************************************************************/
-
+		p = pkct.randomPrime(bit_length, s);
+		do
+			q = pkct.randomPrime(bit_length, s);
+		while (q.compareTo(p) == 0);
+		n = p.multiply(q);
+		phin = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE));
+		EEAResult eear;
+		{
+			e = pkct.randomPrime(bit_length, s);
+			eear = PublicKeyCryptoToolbox.extendedEuclideanAlgorithm(e, phin);
+		}
+		while (!eear.isRelativlyPrime())
+			;
+		d = eear.getInverse();
+		RSAEncryptor enc = new RSAEncryptor(n, e);
+		BigInteger x = new BigInteger("520131415926");
+		BigInteger r1 = enc.encrypt(x);
+		Vector<BigInteger> r2 = enc.encrypt("520131415926");
+		System.out.println(r1);
+		System.out.println(r2);
+		
+		
 		/************************************************************
 		 * Insert the code of Exercise 12c+d+e below this comment!
 		 ************************************************************/
-
+		System.out.println("Exercise of 12c+d+e:");
+		RSADecryptor dec = new RSADecryptor(p, q, d);
+		BigInteger r3 = dec.decrypt(r1);
+		String r4 = dec.decrypt(r2);
+		System.out.println(r3);
+		System.out.println(r4);
 	}
 
 	public void finalTestPreparation()
@@ -132,9 +182,9 @@ public class RSAExercise
 		 * Uncomment the methods after the implementation
 		 */
 		// rsaParamsExercise();
-		// rsaExercise();
-		// finalTestPreparation();
-		// finalTest();
+		//rsaExercise();
+		 finalTestPreparation();
+		 finalTest();
 	}
 
 	public static void main(String[] args)

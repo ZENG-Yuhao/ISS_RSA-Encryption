@@ -21,10 +21,7 @@ public class RSAEncryptor
 		/************************************************************
 		 * Insert the code of Exercise 10b below this comment!
 		 ************************************************************/
-
-		// Remove this line!
-		return new BigInteger("0");
-
+		return PublicKeyCryptoToolbox.modExp(x, e, n);
 	}
 
 	public BigInteger stringToBigInteger(String s)
